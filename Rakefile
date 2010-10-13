@@ -34,6 +34,7 @@ namespace :release do
       Dir.chdir(plugin_dir) do
         sh "rake build"
         sh "rake jar"
+        sh "after_deploy"
       end
       FileUtils.cp("#{PLUGINS_DIR}/#{plugin_name}/#{plugin_name}.jar", "#{PROXY_DIR}/libs")
       FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/external_libs/*"), "#{PROXY_DIR}/libs")
