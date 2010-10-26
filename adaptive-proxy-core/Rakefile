@@ -1,0 +1,71 @@
+# {{{ plugin
+namespace :plugins do
+  desc "Compile proxy plugins"
+  task :build => :clean do
+    Javac.in(PLUGINS_DIR).execute do |javac|
+      javac.src = 'src/**/*.java'
+      javac.cp << 'external_libs/**/*.jar'
+      javac.cp << "../../#{PROXY_DIR}/bin"
+      javac.output = 'bin'
+    end
+  end
+
+  desc "Clean plugins build"
+  task :clean do
+    Dir.chdir(PLUGINS_DIR) do
+      FileUtils.rm_rf Dir.glob('bin/*')
+    end
+  end
+
+  desc "Create proxy-plugins.jar and move it (and its dependencies) to PROXY_DIR's external_libs"
+  task :jar do
+    Jar.in(PLUGINS_DIR).execute do |jar|
+      jar.name = 'proxy-plugins.jar'
+      jar.bin << 'bin'
+    end
+
+    FileUtils.cp("#{PLUGINS_DIR}/proxy-plugins.jar", "#{PROXY_DIR}/libs")
+    FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/external_libs/*"), "#{PROXY_DIR}/libs")
+  end
+
+  desc "Move (and overwrite) plugin configuration to PROXY_DIR"
+  task :configuration do
+    FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/plugins/*.xml"), "#{PROXY_DIR}/plugins")
+  end
+end
+# }}}
+
+
+# {{{ git 
+namespace :git do
+  desc "Find and run 'git pull' on all git repositories"
+  task :pull do
+    Dir.glob('*').each do |f|
+      if File.directory? f and File.exist? "#{f}/.git" then
+        original_path = Dir.getwd
+        Dir.chdir f
+        `git pull`
+        Dir.chdir original_path
+      end
+    end
+  end
+
+  desc "Clones jkey-extractor, adaptive-proxy and adaptive-proxy-plugins repositories"
+  task :clone do
+    %w(adaptive-proxy adaptive-proxy-plugins jkey-extractor).each { |repository| sh "git clone ssh://gitosis@relax.fiit.stuba.sk/#{repository}.git #{CHECKOUT_DIR}#{repository}" }
+
+    branch = ENV['branch']
+    puts "Using plugin branch: #{branch}"
+
+    sh "cd #{CHECKOUT_DIR}/adaptive-proxy-plugins && git pull origin #{branch} && cd -"
+  end
+end
+
+# }}}
+
+
+namespace :offline do
+  task :build do
+    # build the offline jobs and move them to offline/build folder
+  end
+end

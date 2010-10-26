@@ -1,0 +1,60 @@
+# {{{ jkeyextractor
+namespace :jkeyextractor do
+  desc "Compile jkey-extractor"
+  task :build => :clean do
+    Javac.in(JKEY_DIR).execute do |javac|
+      javac.src = 'src/**/*.java'
+      javac.cp << 'lib/**/*.jar'
+      javac.output = 'bin'
+    end
+  end
+
+  desc "Clean jkey-extractor build"
+  task :clean do
+    Dir.chdir(JKEY_DIR) do
+      FileUtils.rm_rf Dir.glob('bin/*')
+    end
+  end
+
+  desc "Create jkey-extractor.jar and move it (and its dependencies) to PLUGINS_DIR's external_lib"
+  task :jar do
+    Jar.in(JKEY_DIR).execute do |jar|
+      jar.name = 'jkeyextractor.jar'
+      jar.bin << 'bin'
+      jar.bin << 'etc'
+    end
+
+    FileUtils.cp("#{JKEY_DIR}/jkeyextractor.jar", "#{PLUGINS_DIR}/external_libs")
+    FileUtils.cp_r(Dir.glob("#{JKEY_DIR}/lib/*"), "#{PROXY_DIR}/libs")
+  end
+end
+# }}}
+
+
+
+# {{{ git 
+namespace :git do
+  desc "Find and run 'git pull' on all git repositories"
+  task :pull do
+    Dir.glob('*').each do |f|
+      if File.directory? f and File.exist? "#{f}/.git" then
+        original_path = Dir.getwd
+        Dir.chdir f
+        `git pull`
+        Dir.chdir original_path
+      end
+    end
+  end
+
+  desc "Clones jkey-extractor, adaptive-proxy and adaptive-proxy-plugins repositories"
+  task :clone do
+    %w(adaptive-proxy adaptive-proxy-plugins jkey-extractor).each { |repository| sh "git clone ssh://gitosis@relax.fiit.stuba.sk/#{repository}.git #{CHECKOUT_DIR}#{repository}" }
+
+    branch = ENV['branch']
+    puts "Using plugin branch: #{branch}"
+
+    sh "cd #{CHECKOUT_DIR}/adaptive-proxy-plugins && git pull origin #{branch} && cd -"
+  end
+end
+
+# }}}
