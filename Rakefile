@@ -17,31 +17,33 @@ FFEXTENSION_DIR= CHECKOUT_DIR + 'adaptive-proxy-ffextension'
 PROXY_WEB_DIR = CHECKOUT_DIR + 'adaptive-proxy-web'
 RELEASE_DIR = '.'
 
-# {{{ jake gem
-spec = Gem::Specification.new do |s|
-  s.name = %q{jake}
-  s.version = "0.1.0"
 
-  s.authors = ["Tomas Kramar"]
-  s.description = %q{Build java code with ease.}
-  s.email = %q{kramar@fiit.stuba.sk}
-  s.files = Dir.glob('lib/**/*.rb') + %w{Rakefile}
-  s.has_rdoc = false
-  s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
-  s.summary = %q{Build java code with ease}
+# {{{ git 
+namespace :git do
+  desc "Find and run 'git pull' on all git repositories"
+  task :pull do
+    Dir.glob('*').each do |f|
+      if File.directory? f and File.exist? "#{f}/.git" then
+        original_path = Dir.getwd
+        Dir.chdir f
+        `git pull`
+        Dir.chdir original_path
+      end
+    end
+  end
+
+  desc "Clones jkey-extractor, adaptive-proxy and adaptive-proxy-plugins repositories"
+  task :clone do
+    %w(adaptive-proxy adaptive-proxy-plugins jkey-extractor).each { |repository| sh "git clone ssh://gitosis@relax.fiit.stuba.sk/#{repository}.git #{CHECKOUT_DIR}#{repository}" }
+
+    branch = ENV['branch']
+    puts "Using plugin branch: #{branch}"
+
+    sh "cd #{CHECKOUT_DIR}/adaptive-proxy-plugins && git pull origin #{branch} && cd -"
+  end
 end
 
-Rake::GemPackageTask.new(spec) do |p|
-  p.gem_spec = spec
-end
 # }}}
-
-
-
-
-
-
 
 
 
