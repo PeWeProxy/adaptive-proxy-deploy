@@ -1,3 +1,25 @@
+require 'pathname'
+APP_ROOT = File.dirname(Pathname.new(__FILE__).realpath)
+$:.unshift(File.join(APP_ROOT, "lib"))
+
+require 'rubygems'
+require 'rake'
+require 'rake/gempackagetask'
+require 'fileutils'
+require 'jake'
+
+CHECKOUT_DIR = 'checkouts/'
+PROXY_DIR = CHECKOUT_DIR + 'adaptive-proxy'
+PLUGINS_DIR = CHECKOUT_DIR + 'adaptive-proxy-plugins'
+JKEY_DIR = CHECKOUT_DIR + 'jkey-extractor'
+BROWSER_PATCHER_DIR = CHECKOUT_DIR + 'adaptive-proxy-browser-patcher'
+FFEXTENSION_DIR= CHECKOUT_DIR + 'adaptive-proxy-ffextension'
+PROXY_WEB_DIR = CHECKOUT_DIR + 'adaptive-proxy-web'
+RELEASE_DIR = '.'
+
+# TODO: clean requirements and declaration
+# TODO: change paths (or not to change paths?)
+
 # {{{ jkeyextractor
 namespace :jkeyextractor do
   desc "Compile jkey-extractor"
@@ -29,3 +51,5 @@ namespace :jkeyextractor do
   end
 end
 # }}}
+
+task :default => ["jkeyextractor:build", "jkeyextractor:jar"]
