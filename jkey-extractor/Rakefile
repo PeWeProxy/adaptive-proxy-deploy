@@ -1,55 +1,28 @@
-require 'pathname'
-APP_ROOT = File.dirname(Pathname.new(__FILE__).realpath)
-$:.unshift(File.join(APP_ROOT, "lib"))
-
 require 'rubygems'
-require 'rake'
-require 'rake/gempackagetask'
 require 'fileutils'
 require 'jake'
 
-CHECKOUT_DIR = 'checkouts/'
-PROXY_DIR = CHECKOUT_DIR + 'adaptive-proxy'
-PLUGINS_DIR = CHECKOUT_DIR + 'adaptive-proxy-plugins'
-JKEY_DIR = CHECKOUT_DIR + 'jkey-extractor'
-BROWSER_PATCHER_DIR = CHECKOUT_DIR + 'adaptive-proxy-browser-patcher'
-FFEXTENSION_DIR= CHECKOUT_DIR + 'adaptive-proxy-ffextension'
-PROXY_WEB_DIR = CHECKOUT_DIR + 'adaptive-proxy-web'
-RELEASE_DIR = '.'
-
-# TODO: clean requirements and declaration
-# TODO: change paths (or not to change paths?)
-
-# {{{ jkeyextractor
-namespace :jkeyextractor do
-  desc "Compile jkey-extractor"
-  task :build => :clean do
-    Javac.in(JKEY_DIR).execute do |javac|
-      javac.src = 'src/**/*.java'
-      javac.cp << 'lib/**/*.jar'
-      javac.output = 'bin'
-    end
-  end
-
-  desc "Clean jkey-extractor build"
-  task :clean do
-    Dir.chdir(JKEY_DIR) do
-      FileUtils.rm_rf Dir.glob('bin/*')
-    end
-  end
-
-  desc "Create jkey-extractor.jar and move it (and its dependencies) to PLUGINS_DIR's external_lib"
-  task :jar do
-    Jar.in(JKEY_DIR).execute do |jar|
-      jar.name = 'jkeyextractor.jar'
-      jar.bin << 'bin'
-      jar.bin << 'etc'
-    end
-
-    FileUtils.cp("#{JKEY_DIR}/jkeyextractor.jar", "#{PLUGINS_DIR}/external_libs")
-    FileUtils.cp_r(Dir.glob("#{JKEY_DIR}/lib/*"), "#{PROXY_DIR}/libs")
+desc "Compile jkey-extractor"
+task :build => :clean do
+  Javac.in('.').execute do |javac|
+    javac.src = 'src/**/*.java'
+    javac.cp << 'lib/**/*.jar'
+    javac.output = 'bin'
   end
 end
-# }}}
 
-task :default => ["jkeyextractor:build", "jkeyextractor:jar"]
+desc "Clean jkey-extractor build"
+task :clean do
+  FileUtils.rm_rf Dir.glob('bin/*')
+end
+
+desc "Create jkey-extractor.jar"
+task :jar do
+  Jar.in('.').execute do |jar|
+    jar.name = 'jkeyextractor.jar'
+    jar.bin << 'bin'
+    jar.bin << 'etc'
+  end
+end
+
+task :default => [":build", ":jar"]
