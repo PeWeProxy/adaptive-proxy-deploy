@@ -13,7 +13,7 @@ PROXY_DIR = 'adaptive-proxy'
 namespace :src do
   desc "Compile proxy plugin bundle"
   task :build => :clean do
-    Javac.in('.').execute do |javac|
+    javac.in('.').execute do |javac|
       javac.src = 'src/**/*.java'
       javac.cp << 'external_libs/**/*.jar'
       javac.cp << "../../#{PROXY_DIR}/bin"
@@ -43,8 +43,8 @@ java_apps = {
 	'test' => 'sk.fiit.plesko.test.MainClass'
 }
 
-desc "Compile offline tasks"
-  task :build do
+	desc "Compile offline tasks"
+	task :build do
   
   	FileUtils.mkdir('offline/build') unless File.exists?("offline/build")
   	java_apps.each_pair do |app_name, mainclass|
@@ -73,15 +73,15 @@ desc "Compile offline tasks"
   		FileUtils.mv('offline/'+app_name+'/'+app_name+'.jar', 'offline/build/'+app_name+'.jar')
   		
   	end
-  end
   
-  desc "Schedule tasks as defined in config/schedule.rb"
-  task :schedule do
-  	Whenever::CommandLine.execute({:update=>true})
-  end
+	desc "Schedule tasks as defined in config/schedule.rb"
+	task :schedule do
+		Whenever::CommandLine.execute({:update=>true})
+	end
+	end
 end
 
-namespace :migrations
+namespace :migrations do
 # we need to make migrations for database
 desc "Migrate the database through scripts in this folder. Target specific version with VERSION=x"
    task :migrate => :environment do
@@ -96,6 +96,7 @@ desc "Migrate the database through scripts in this folder. Target specific versi
      ActiveRecord::Base.establish_connection(YAML::load(File.open('database.yml'))[ENV["RAILS_ENV"] ? ENV["RAILS_ENV"] : "development"])
      ActiveRecord::Base.logger = Logger.new(File.open('database.log', 'a'))
    end
+end
 
 namespace :after do
   desc "Run task after deploy"
@@ -104,4 +105,4 @@ namespace :after do
   end
 end
 
-task :default => [":src:build", "migrations:migrate", "offline:build", "after:after_deploy"]
+task :default => ["src:build", "migrations:migrate", "offline:build", "after:after_deploy"]
