@@ -1,9 +1,6 @@
 [submodule "adaptive-proxy"]
 	path = adaptive-proxy
 	url = ssh://gitosis@peweproxy-staging.fiit.stuba.sk/adaptive-proxy.git
-[submodule "adaptive-proxy-plugins"]
-	path = adaptive-proxy-plugins
-	url = ssh://gitosis@peweproxy-staging.fiit.stuba.sk/adaptive-proxy-plugins.git
 [submodule "jkey-extractor"]
 	path = jkey-extractor
 	url = ssh://gitosis@peweproxy-staging.fiit.stuba.sk/jkey-extractor.git
