@@ -4,3 +4,6 @@
 [submodule "jkey-extractor"]
 	path = jkey-extractor
 	url = ssh://gitosis@peweproxy-staging.fiit.stuba.sk/jkey-extractor.git
+[submodule "plugins/adaptive-proxy-coreplugins"]
+	path = plugins/adaptive-proxy-coreplugins
+	url = ssh://gitosis@peweproxy-staging.fiit.stuba.sk/adaptive-proxy-plugins.git
