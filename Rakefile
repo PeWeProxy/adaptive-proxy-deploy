@@ -82,8 +82,13 @@ namespace :release do
       FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/static/*"), "#{PROXY_DIR}/htdocs")
       
       #copy and update configuration xml files
-	  # TODO: rename dir plugins_config to plugins - colide with dir plugins from adaptive-proxy-root
-	  FileUtils.mkdir "#{PROXY_DIR}/plugins_config" unless File.exists?("#{PROXY_DIR}/plugins_config")
+	  
+	  
+	  
+	  
+	  
+	  
+	  FileUtils.mkdir "#{PROXY_DIR}/plugins" unless File.exists?("#{PROXY_DIR}/plugins")
 	  contains = Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/plugins/*")
 	  contains.each do |configFile|
 		ext = File.extname(configFile)
@@ -94,21 +99,21 @@ namespace :release do
 			doc = REXML::Document.new file
 	
 			doc.elements.each("plugin/libraries/lib") do |element|
-				element.text = "libs/#{element.text}"
+				element.text = "#{plugin_name}#{element.text}"
 			end
 			
 			doc.elements.each('plugin/classLocation') do |element|
-				element.text = "libs/#{plugin_name}.jar"
+				element.text = "#{plugin_name}.jar"
 			end
-			
-			
 			
 			formatter = REXML::Formatters::Default.new
-			File.open("#{PROXY_DIR}/plugins_config/#{configFileName}", 'w') do |result|
-				formatter.write(doc, result)
+			if File.exists?("#{PROXY_DIR}/plugins/#{configFileName}")
+				File.open("#{PROXY_DIR}/plugins/#{configFileName}", 'w') do |result|
+					formatter.write(doc, result)
+				end
 			end
 		else
-			FileUtils.cp_r(Dir.glob("#{configFile}"), "#{PROXY_DIR}/plugins_config/")
+			FileUtils.cp_r(Dir.glob("#{configFile}"), "#{PROXY_DIR}/plugins/")
 		end
   	  end
 	  
