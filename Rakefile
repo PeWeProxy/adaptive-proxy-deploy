@@ -24,20 +24,23 @@ namespace :release do
       sh "rake" #Warning! This won't work under Windows. The command line is too long.
     end
 
-    #loop in all plugin modules
+    #loop in all plugin modulesplugin_dir
     Dir.glob("#{PLUGINS_DIR}/*") do |plugin_dir|
       #magic
       plugin_name = plugin_dir.match(/[^\/]+$/)[0]
 
+      FileUtils.mkdir "#{PROXY_DIR}/offline" unless File.exists?("#{PROXY_DIR}/offline")
+
       #rake
       Dir.chdir(plugin_dir) do
         sh "rake"
+        FileUtils.cp_r(Dir.glob("offline/build/*"), "#{PROXY_DIR}/offline")
       end
 
       #copy libs
       FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/external_libs/*"), "#{PROXY_DIR}/libs")
       
-      #copy static content
+      #copy static contentplugin_dir
       FileUtils.mkdir "#{PROXY_DIR}/htdocs" unless File.exists?("#{PROXY_DIR}/htdocs")
       FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/static/*"), "#{PROXY_DIR}/htdocs")
       
