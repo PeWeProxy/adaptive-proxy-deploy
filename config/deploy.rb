@@ -23,14 +23,11 @@ end
 
 #task :after_update_code do
 task :proxy_build do
-   stream "cd #{current_path} && rake --rakefile=#{current_path}/jake/Rakefile release:prepare branch=#{git_branch} git_server=#{git_server}"
+   stream "cd #{current_path} && rake --rakefile=#{current_path}/Rakefile release:build branch=#{git_branch} git_server=#{git_server}"
    restart_proxy
 end
 
-# after 'deploy', 'proxy_build', 'deploy:cleanup'
-
-#deploy.task :finalize_update, :except => { :no_release => true } do
+after 'deploy', 'proxy_build', 'deploy:cleanup'
+deploy.task :finalize_update, :except => { :no_release => true } do
 #NOOP
-#end
-
-
+end
