@@ -2,12 +2,16 @@ require 'rubygems'
 require 'fileutils'
 require 'jake'
 
+
+CHECKOUT_DIR = ''
+
+
 namespace :release do
 
-  JKEY_DIR = "jkey-extractor"
-  PROXY_DIR = "adaptive-proxy"
-  PLUGINS_DIR = "adaptive-proxy-plugins"
-  CORE_PLUGINS_DIR = "plugins/adaptive-proxy-coreplugins"
+  JKEY_DIR = CHECKOUT_DIR + "jkey-extractor"
+  PROXY_DIR = CHECKOUT_DIR + "adaptive-proxy"
+  PLUGINS_DIR = CHECKOUT_DIR + "adaptive-proxy-plugins"
+  CORE_PLUGINS_DIR = CHECKOUT_DIR + "plugins/adaptive-proxy-coreplugins"
 
   desc "Find and run 'git pull' on all git submodules"
   task :pull do
@@ -70,6 +74,7 @@ namespace :release do
       end
 
       #copy libs
+	  FileUtils.mkdir "#{PROXY_DIR}/libs" unless File.exists?("#{PROXY_DIR}/libs")
       FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/external_libs/*"), "#{PROXY_DIR}/libs")
       
       #copy static contentplugin_dir
