@@ -76,10 +76,12 @@ namespace :release do
       #copy libs
 	  FileUtils.mkdir "#{PROXY_DIR}/libs" unless File.exists?("#{PROXY_DIR}/libs")
       FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/external_libs/*"), "#{PROXY_DIR}/libs")
+	  FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/external_libs/*"), "libs")
       
       #copy static contentplugin_dir
       FileUtils.mkdir "#{PROXY_DIR}/htdocs" unless File.exists?("#{PROXY_DIR}/htdocs")
       FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/static/*"), "#{PROXY_DIR}/htdocs")
+	  FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/static/*"), "htdocs")
       
       #copy and update configuration xml files
 	  FileUtils.mkdir "#{PROXY_DIR}/plugins" unless File.exists?("#{PROXY_DIR}/plugins")
