@@ -82,46 +82,26 @@ namespace :release do
       FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/static/*"), "#{PROXY_DIR}/htdocs")
       
       #copy and update configuration xml files
-	  
-	  
-	  
-	  
-	  
-	  
 	  FileUtils.mkdir "#{PROXY_DIR}/plugins" unless File.exists?("#{PROXY_DIR}/plugins")
-	  contains = Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/plugins/*")
+		
+	  contains = Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/plugins/*.xml")
 	  contains.each do |configFile|
-		ext = File.extname(configFile)
-		if ext == ".xml"
-			configFileName = configFile.split('/').last
-			   
-			file = File.new(configFile)
-			doc = REXML::Document.new file
-	
-			doc.elements.each("plugin/libraries/lib") do |element|
-				element.text = "#{plugin_name}#{element.text}"
-			end
+	  	configFileName = configFile.split('/').last
+		   
+		file = File.new(configFile)
+		doc = REXML::Document.new file
 			
-			doc.elements.each('plugin/classLocation') do |element|
-				element.text = "#{plugin_name}.jar"
-			end
+		doc.elements.each("plugin/libraries/lib") do |element|
+			element.text = "#{plugin_name}#{element.text}"
+		end
 			
-			formatter = REXML::Formatters::Default.new
-			if File.exists?("#{PROXY_DIR}/plugins/#{configFileName}")
-				File.open("#{PROXY_DIR}/plugins/#{configFileName}", 'w') do |result|
-					formatter.write(doc, result)
-				end
-			end
-		else
-			FileUtils.cp_r(Dir.glob("#{configFile}"), "#{PROXY_DIR}/plugins/")
+		doc.elements['plugin/classLocation'].text = "#{plugin_name}.jar"
+			
+		formatter = REXML::Formatters::Default.new
+		File.open("#{PROXY_DIR}/plugins", 'w') do |result|
+			formatter.write(doc, result)
 		end
   	  end
-	  
-	  
-	  
-	  
-	  
-	  
   	  
       
     end
