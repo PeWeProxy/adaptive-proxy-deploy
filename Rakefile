@@ -82,26 +82,41 @@ namespace :release do
       FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/static/*"), "#{PROXY_DIR}/htdocs")
       
       #copy and update configuration xml files
-	  FileUtils.mkdir "#{PROXY_DIR}/plugins" unless File.exists?("#{PROXY_DIR}/plugins")
-		
-	  contains = Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/plugins/*.xml")
+	  # TODO: rename dir plugins_config to plugins - colide with dir plugins from adaptive-proxy-root
+	  FileUtils.mkdir "#{PROXY_DIR}/plugins_config" unless File.exists?("#{PROXY_DIR}/plugins_config")
+	  contains = Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/plugins/*")
 	  contains.each do |configFile|
-	  	configFileName = configFile.split('/').last
-		   
-		file = File.new(configFile)
-		doc = REXML::Document.new file
+		ext = File.extname(configFile)
+		if ext == ".xml"
+			configFileName = configFile.split('/').last
+			   
+			file = File.new(configFile)
+			doc = REXML::Document.new file
+	
+			doc.elements.each("plugin/libraries/lib") do |element|
+				element.text = "libs/#{element.text}"
+			end
 			
-		doc.elements.each("plugin/libraries/lib") do |element|
-			element.text = "#{plugin_name}#{element.text}"
-		end
+			doc.elements.each('plugin/classLocation') do |element|
+				element.text = "libs/#{plugin_name}.jar"
+			end
 			
-		doc.elements['plugin/classLocation'].text = "#{plugin_name}.jar"
 			
-		formatter = REXML::Formatters::Default.new
-		File.open("#{PROXY_DIR}/plugins", 'w') do |result|
-			formatter.write(doc, result)
+			
+			formatter = REXML::Formatters::Default.new
+			File.open("#{PROXY_DIR}/plugins_config/#{configFileName}", 'w') do |result|
+				formatter.write(doc, result)
+			end
+		else
+			FileUtils.cp_r(Dir.glob("#{configFile}"), "#{PROXY_DIR}/plugins_config/")
 		end
   	  end
+	  
+	  
+	  
+	  
+	  
+	  
   	  
       
     end
@@ -111,8 +126,8 @@ namespace :release do
 	FileUtils.mkdir "libs" unless File.exists?("libs")
     FileUtils.mkdir "offline" unless File.exists?("offline")
 	FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/htdocs/*"), "htdocs")
+		
 	FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/libs/*"), "libs")
-	FileUtils.cp("#{PROXY_DIR}/proxy.jar", ".")
 	FileUtils.cp_r("#{PROXY_DIR}/offline", "offline")
   end
 
