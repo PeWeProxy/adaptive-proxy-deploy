@@ -75,15 +75,11 @@ namespace :release do
 
       #copy libs
 	  FileUtils.mkdir "#{PROXY_DIR}/libs" unless File.exists?("#{PROXY_DIR}/libs")
-	  FileUtils.mkdir "libs" unless File.exists?("libs")
       FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/external_libs/*"), "#{PROXY_DIR}/libs")
-	  FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/external_libs/*"), "libs")
       
       #copy static contentplugin_dir
       FileUtils.mkdir "#{PROXY_DIR}/htdocs" unless File.exists?("#{PROXY_DIR}/htdocs")
-	  FileUtils.mkdir "htdocs" unless File.exists?("htdocs")
       FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/static/*"), "#{PROXY_DIR}/htdocs")
-	  FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/static/*"), "htdocs")
       
       #copy and update configuration xml files
 	  FileUtils.mkdir "#{PROXY_DIR}/plugins" unless File.exists?("#{PROXY_DIR}/plugins")
@@ -109,6 +105,17 @@ namespace :release do
   	  
       
     end
+	
+	#copy all to main release direcotry
+	FileUtils.mkdir "htdocs" unless File.exists?("htdocs")
+	FileUtils.mkdir "libs" unless File.exists?("libs")
+    FileUtils.mkdir "offline" unless File.exists?("offline")
+	FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/static/*"), "htdocs")
+	FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/external_libs/*"), "libs")
+	FileUtils.cp(Dir.glob("#{PROXY_DIR}/proxy.jar"), ".")
+	FileUtils.cp_r(Dir.glob("offline/build/*"), "offline")
+
+
   end
 
 end
