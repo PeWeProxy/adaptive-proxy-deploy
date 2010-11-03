@@ -112,9 +112,19 @@ namespace :release do
     FileUtils.mkdir "offline" unless File.exists?("offline")
 	FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/static/*"), "htdocs")
 	FileUtils.cp_r(Dir.glob("#{PLUGINS_DIR}/#{plugin_name}/external_libs/*"), "libs")
-	FileUtils.cp(Dir.glob("#{PROXY_DIR}/proxy.jar"), ".")
+	FileUtils.cp("#{PROXY_DIR}/proxy.jar", ".")
 	FileUtils.cp_r(Dir.glob("offline/build/*"), "offline")
-
+	
+	# delete temp files
+	Dir.glob("#{PLUGINS_DIR}/*") do |plugin_dir|
+	      FileUtils.rm_rf plugin_dir
+	end
+	FileUtils.rm_rf Dir.glob('adaptive-proxy')
+	FileUtils.rm_rf Dir.glob('jkey-extractor')
+	FileUtils.rm_rf Dir.glob('jkey-extractor')
+	FileUtils.rm_f Capfile
+	FileUtils.rm_f Gemfile
+	FileUtils.rm_f Rakefile
 
   end
 
