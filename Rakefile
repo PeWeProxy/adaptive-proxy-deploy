@@ -114,15 +114,6 @@ namespace :release do
 	FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/libs/*"), "libs")
 	FileUtils.cp("#{PROXY_DIR}/proxy.jar", ".")
 	FileUtils.cp_r(#{PROXY_DIR}/offline, "offline")
-	
-	# delete temp files
-	Dir.glob("#{PLUGINS_DIR}/*") do |plugin_dir|
-	      FileUtils.rm_rf plugin_dir
-	end
-	FileUtils.rm_f "Capfile"
-	FileUtils.rm_f "Gemfile"
-	FileUtils.rm_f "Rakefile"
-
   end
 
 end
