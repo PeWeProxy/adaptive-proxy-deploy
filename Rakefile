@@ -113,7 +113,7 @@ namespace :release do
 	FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/htdocs/*"), "htdocs")
 	FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/libs/*"), "libs")
 	FileUtils.cp("#{PROXY_DIR}/proxy.jar", ".")
-	FileUtils.cp_r(#{PROXY_DIR}/offline, "offline")
+	FileUtils.cp_r("#{PROXY_DIR}/offline", "offline")
   end
 
 end
