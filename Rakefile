@@ -3,7 +3,7 @@ require 'fileutils'
 require 'jake'
 
 
-CHECKOUT_DIR = ''
+CHECKOUT_DIR = 'checkouts/'
 
 
 namespace :release do
