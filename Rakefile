@@ -7,10 +7,42 @@ namespace :release do
   JKEY_DIR = "jkey-extractor"
   PROXY_DIR = "adaptive-proxy"
   PLUGINS_DIR = "adaptive-proxy-plugins"
-  CORE_PLUGINS_DIR = PLUGINS_DIR + "/adaptive-proxy-core"
+  CORE_PLUGINS_DIR = "plugins/adaptive-proxy-coreplugins"
 
+  desc "Find and run 'git pull' on all git submodules"
+  task :pull do
+	 branch = 'master'
+	`git submodule init`
+	`git submodule update`
+    Dir.glob('*').each do |f|
+      if File.directory? f and File.exist? "#{f}/.git" then
+        original_path = Dir.getwd
+        Dir.chdir f
+		`git pull origin #{branch}`
+        Dir.chdir original_path
+      end
+    end
+    Dir.glob('plugins/*').each do |f|
+      if File.directory? f and File.exist? "#{f}/.git" then
+        original_path = Dir.getwd
+        Dir.chdir f
+		`git pull origin #{branch}`
+        Dir.chdir original_path
+      end
+    end
+  end
+
+#  desc "Clones jkey-extractor, adaptive-proxy and adaptive-proxy-plugins repositories"
+#  task :clone do
+#    %w(adaptive-proxy adaptive-proxy-plugins jkey-extractor).each { |repository| sh "git clone ssh://gitosis@#{ENV['git_server']}/#{repository}.git #{CHECKOUT_DIR}#{repository}" }
+
+#    branch = ENV['branch']
+#    puts "Using plugin branch: #{branch}"
+
+#    sh "cd #{CHECKOUT_DIR}/adaptive-proxy-plugins && git pull origin #{branch} && cd -"
+#  end
+  
   desc "Build proxy, plugins and all of their dependencies, bundle into proxy.jar"
-
   task :build do
     #build and bundle jkey-extractor, copy libs
     Dir.chdir(JKEY_DIR) do
@@ -71,3 +103,5 @@ namespace :release do
   end
 
 end
+
+task :default => ["release:pull", "release:build"]
