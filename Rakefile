@@ -119,9 +119,6 @@ namespace :release do
 	Dir.glob("#{PLUGINS_DIR}/*") do |plugin_dir|
 	      FileUtils.rm_rf plugin_dir
 	end
-	FileUtils.rm_rf Dir.glob('adaptive-proxy')
-	FileUtils.rm_rf Dir.glob('jkey-extractor')
-	FileUtils.rm_rf Dir.glob('jkey-extractor')
 	FileUtils.rm_f "Capfile"
 	FileUtils.rm_f "Gemfile"
 	FileUtils.rm_f "Rakefile"
