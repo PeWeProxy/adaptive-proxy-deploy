@@ -99,7 +99,7 @@ namespace :release do
 					end
 
 					doc.elements.each('plugin/classLocation') do |element|
-						element.text = "plugins/libs/#{plugin_name}.jar"
+						element.text = "libs/#{plugin_name}.jar"
 					end
 
 					formatter = REXML::Formatters::Default.new
