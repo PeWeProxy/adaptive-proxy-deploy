@@ -6,10 +6,10 @@ require 'jake'
 
 namespace :release do
 
-  JKEY_DIR = CHECKOUT_DIR + "jkey-extractor"
-  PROXY_DIR = CHECKOUT_DIR + "adaptive-proxy"
-  PLUGINS_DIR = CHECKOUT_DIR + "plugins"
-  CORE_PLUGINS_DIR = CHECKOUT_DIR + "adaptive-proxy-coreplugins"
+  JKEY_DIR =  "jkey-extractor"
+  PROXY_DIR = "adaptive-proxy"
+  PLUGINS_DIR = "plugins"
+  CORE_PLUGINS_DIR = "adaptive-proxy-coreplugins"
   DEPLOY_TEMP_DIR = 'deploy/'
 
   desc "Find and run 'git pull' on all git submodules"
