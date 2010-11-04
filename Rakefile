@@ -43,6 +43,7 @@ namespace :release do
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}htdocs" unless File.exists?("#{DEPLOY_TEMP_DIR}htdocs")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}plugins" unless File.exists?("#{DEPLOY_TEMP_DIR}plugins")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}plugins/libs" unless File.exists?("#{DEPLOY_TEMP_DIR}plugins/libs")
+		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}conf" unless File.exists?("#{DEPLOY_TEMP_DIR}conf")
 
     #build and bundle jkey-extractor, copy libs
     Dir.chdir(JKEY_DIR) do
@@ -57,6 +58,7 @@ namespace :release do
     end
 		FileUtils.cp("#{PROXY_DIR}/proxy.jar", "#{DEPLOY_TEMP_DIR}")
 
+		FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/conf/*"),"#{DEPLOY_TEMP_DIR}conf")
 
     #loop in all plugin modulesplugin_dir
     Dir.glob("#{PLUGINS_DIR}/*") do |plugin_dir|
@@ -121,6 +123,7 @@ namespace :release do
 	end
 
 	task :move do
+
 		Dir.glob("./*") do |dir|
 			if (dir != './deploy')
 				FileUtils.rm_rf(dir)
