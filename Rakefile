@@ -95,7 +95,7 @@ namespace :release do
 						element.text = "#{plugin_name}.jar"
 					end
 
-					formatter = REXML::Formatters:Default.new
+					formatter = REXML::Formatters::Default.new
 					File.open("#{DEPLOY_TEMP_DIR}plugins/#{configFileName}", 'w') do |result|
 						formatter.write(doc, result)
 					end
