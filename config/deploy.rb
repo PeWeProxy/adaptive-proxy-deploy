@@ -23,7 +23,7 @@ end
 
 #task :after_update_code do
 task :proxy_build do
-   stream "cd #{current_path} && rake --rakefile=#{current_path}/Rakefile release:build branch=#{git_branch} git_server=#{git_server}"
+   stream "cd #{current_path} && rake --rakefile=#{current_path}/Rakefile release:build branch=#{git_branch} git_server=#{git_server} stage=#{stage}"
    restart_proxy
 end
 

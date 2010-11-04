@@ -65,9 +65,9 @@ namespace :release do
 
 
       #rake
-			Dir.chdir(plugin_dir)
-			sh "rake"
-			Dir.chdir("..")
+			Dir.chdir(plugin_dir) do
+				sh "rake RAILS_ENV='#{ENV['stage']}'"
+			end
 		
 			FileUtils.cp_r(Dir.glob("#{plugin_dir}/offline/build/*"), "#{DEPLOY_TEMP_DIR}offline")
 
