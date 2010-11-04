@@ -43,6 +43,7 @@ namespace :release do
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}htdocs" unless File.exists?("#{DEPLOY_TEMP_DIR}htdocs")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}plugins" unless File.exists?("#{DEPLOY_TEMP_DIR}plugins")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}plugins/libs" unless File.exists?("#{DEPLOY_TEMP_DIR}plugins/libs")
+    FileUtils.mkdir "#{DEPLOY_TEMP_DIR}plugins/services" unless File.exists?("#{DEPLOY_TEMP_DIR}plugins/services")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}conf" unless File.exists?("#{DEPLOY_TEMP_DIR}conf")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}logs" unless File.exists?("#{DEPLOY_TEMP_DIR}logs")
 
@@ -74,6 +75,8 @@ namespace :release do
 			end
 
 			FileUtils.cp("#{plugin_dir}/#{plugin_name}.jar", "#{DEPLOY_TEMP_DIR}plugins/libs")
+
+      FileUtils.cp_r(Dir.glob("#{plugin_dir}/def/bin/*"), "#{DEPLOY_TEMP_DIR}plugins/services")
 
 			FileUtils.cp_r(Dir.glob("#{plugin_dir}/offline/build/*"), "#{DEPLOY_TEMP_DIR}offline")
 			FileUtils.cp_r(Dir.glob("#{plugin_dir}/offline/scripts/*"), "#{DEPLOY_TEMP_DIR}offline/scripts")
