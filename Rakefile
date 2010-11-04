@@ -113,6 +113,7 @@ namespace :release do
   end
 
 	task :move do
+=begin
 		Dir.glob("./*") do |dir|
 			if (dir != './deploy')
 				FileUtils.rm_rf(dir)
@@ -120,6 +121,7 @@ namespace :release do
 		end
 		FileUtils.mv(Dir.glob("#{DEPLOY_TEMP_DIR}*"), ".")
 		FileUtils.rm_rf(DEPLOY_TEMP_DIR)
+=end
 	end
 
 end
