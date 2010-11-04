@@ -19,18 +19,16 @@ namespace :release do
 		`git submodule update`
     Dir.glob('*').each do |f|
       if File.directory? f and File.exist? "#{f}/.git" then
-        original_path = Dir.getwd
-        Dir.chdir f
+        Dir.chdir f do
 				`git pull origin #{branch}`
-        Dir.chdir original_path
+				end
       end
     end
     Dir.glob('plugins/*').each do |f|
       if File.directory? f and File.exist? "#{f}/.git" then
-        original_path = Dir.getwd
-        Dir.chdir f
+        Dir.chdir f do
 				`git pull origin #{branch}`
-        Dir.chdir original_path
+				end
       end
     end
   end
