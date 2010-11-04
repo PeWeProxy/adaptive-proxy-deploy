@@ -1,7 +1,8 @@
 require 'rubygems'
 require 'fileutils'
 require 'jake'
-
+require 'rexml'
+require 'rexml/document'
 
 
 namespace :release do
