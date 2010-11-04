@@ -117,14 +117,9 @@ namespace :release do
   end
 
 	task :after do
-		proxy_root_dir = ''
-		Dir.chdir('../..') do
-			proxy_root_dir = Dir.getwd
-		end
-
     Dir.glob("#{PLUGINS_DIR}/*") do |plugin_dir|
 			Dir.chdir(plugin_dir) do
-				`rake after:after_deploy PROXY_ROOT='#{proxy_root_dir}'`
+				`rake after:after_deploy PROXY_ROOT='#{ENV['PROXY_ROOT']}'`
 			end
 		end
 	end
