@@ -60,6 +60,7 @@ namespace :release do
 		FileUtils.cp("#{PROXY_DIR}/proxy.jar", "#{DEPLOY_TEMP_DIR}")
 		FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/libs/*"), "#{DEPLOY_TEMP_DIR}libs")
 		FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/conf/*"),"#{DEPLOY_TEMP_DIR}conf")
+		FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/htdocs/*"),"#{DEPLOY_TEMP_DIR}htdocs")
 
     #loop in all plugin modulesplugin_dir
     Dir.glob("#{PLUGINS_DIR}/*") do |plugin_dir|
