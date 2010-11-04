@@ -58,7 +58,7 @@ namespace :release do
       sh "rake" #Warning! This won't work under Windows. The command line is too long.
     end
 		FileUtils.cp("#{PROXY_DIR}/proxy.jar", "#{DEPLOY_TEMP_DIR}")
-
+		FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/libs/*"), "#{DEPLOY_TEMP_DIR}libs")
 		FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/conf/*"),"#{DEPLOY_TEMP_DIR}conf")
 
     #loop in all plugin modulesplugin_dir
