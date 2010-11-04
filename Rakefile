@@ -112,6 +112,14 @@ namespace :release do
 
   end
 
+	task :after do
+    Dir.glob("#{PLUGINS_DIR}/*") do |plugin_dir|
+			Dir.chdir(plugin_dir) do
+				`rake after:after_deploy`
+			end
+		end
+	end
+
 	task :move do
 		Dir.glob("./*") do |dir|
 			if (dir != './deploy')
