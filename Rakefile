@@ -13,7 +13,7 @@ namespace :release do
   DEPLOY_TEMP_DIR = 'deploy/'
 
   desc "Find and run 'git pull' on all git submodules"
-  task pull do
+  task :pull do
         branch = 'master'
         `git submodule init`
         `git submodule update`
@@ -93,7 +93,7 @@ namespace :release do
                     configFileName = configFile.split('/').last
 
                     file = File.new(configFile)
-                    doc = REXML:ocument.new file
+                    doc = REXML::Document.new file
 
                     doc.elements.each("plugin/libraries/lib") do |element|
                         element.text = "#{plugin_name}#{element.text}"
@@ -103,7 +103,7 @@ namespace :release do
                         element.text = "#{plugin_name}.jar"
                     end
 
-                    formatter = REXML::Formatters:efault.new
+                    formatter = REXML::Formatters:Default.new
                     File.open("#{DEPLOY_TEMP_DIR}plugins/#{configFileName}", 'w') do |result|
                         formatter.write(doc, result)
                     end
@@ -119,4 +119,4 @@ namespace :release do
 
 end
 
-task efault => ["releaseull", "release:build"]
+task :default => ["release:pull", "release:build"]
