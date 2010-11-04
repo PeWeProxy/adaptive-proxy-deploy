@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'fileutils'
 require 'jake'
-require 'rexml'
 require 'rexml/document'
 
 
@@ -39,6 +38,7 @@ namespace :release do
 		#create deploy directory structure
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}" unless File.exists?("#{DEPLOY_TEMP_DIR}")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}offline" unless File.exists?("#{DEPLOY_TEMP_DIR}offline")
+		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}offline/scripts" unless File.exists?("#{DEPLOY_TEMP_DIR}offline/scripts")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}libs" unless File.exists?("#{DEPLOY_TEMP_DIR}libs")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}htdocs" unless File.exists?("#{DEPLOY_TEMP_DIR}htdocs")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}plugins" unless File.exists?("#{DEPLOY_TEMP_DIR}plugins")
@@ -67,9 +67,10 @@ namespace :release do
 			Dir.chdir(plugin_dir) do
 				sh "rake RAILS_ENV='#{ENV['stage']}'"
 			end
-		
-			FileUtils.cp_r(Dir.glob("#{plugin_dir}/offline/build/*"), "#{DEPLOY_TEMP_DIR}offline")
 
+			FileUtils.cp_r(Dir.glob("#{plugin_dir}/offline/build/*"), "#{DEPLOY_TEMP_DIR}offline")
+			FileUtils.cp_r(Dir.glob("#{plugin_dir}/offline/scripts/*"), "#{DEPLOY_TEMP_DIR}offline/scripts")
+			
       #copy libs
       FileUtils.cp_r(Dir.glob("#{plugin_dir}/external_libs/*"), "#{DEPLOY_TEMP_DIR}libs")
       
