@@ -42,6 +42,7 @@ namespace :release do
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}libs" unless File.exists?("#{DEPLOY_TEMP_DIR}libs")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}htdocs" unless File.exists?("#{DEPLOY_TEMP_DIR}htdocs")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}plugins" unless File.exists?("#{DEPLOY_TEMP_DIR}plugins")
+		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}plugins/libs" unless File.exists?("#{DEPLOY_TEMP_DIR}plugins/libs")
   
     #build and bundle jkey-extractor, copy libs
     Dir.chdir(JKEY_DIR) do
@@ -54,7 +55,7 @@ namespace :release do
     Dir.chdir(PROXY_DIR) do
       sh "rake" #Warning! This won't work under Windows. The command line is too long.
     end
-
+		FileUtils.cp("#{PROXY_DIR}/proxy.jar", "#{DEPLOY_TEMP_DIR}")
 
 
     #loop in all plugin modulesplugin_dir
@@ -67,6 +68,8 @@ namespace :release do
 			Dir.chdir(plugin_dir) do
 				sh "rake RAILS_ENV='#{ENV['stage']}'"
 			end
+
+			FileUtils.cp_r("#{plugin_dir}/#{plugin_name}.jar", "#{DEPLOY_TEMP_DIR}plugins/libs")
 
 			FileUtils.cp_r(Dir.glob("#{plugin_dir}/offline/build/*"), "#{DEPLOY_TEMP_DIR}offline")
 			FileUtils.cp_r(Dir.glob("#{plugin_dir}/offline/scripts/*"), "#{DEPLOY_TEMP_DIR}offline/scripts")
