@@ -95,7 +95,7 @@ namespace :release do
 					doc = REXML::Document.new file
 
 					doc.elements.each("plugin/libraries/lib") do |element|
-						element.text = "libs/#{element.text}"
+						element.text = "../libs/#{element.text}"
 					end
 
 					doc.elements.each('plugin/classLocation') do |element|
