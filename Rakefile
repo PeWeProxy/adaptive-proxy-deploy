@@ -113,17 +113,15 @@ namespace :release do
   end
 
 	task :move do
-		puts ':::::::: MOVE EXITED ::::::::'
-		Process.exit
 		Dir.glob("./*") do |dir|
 			if (dir != './deploy')
 				FileUtils.rm_rf(dir)
 			end
 		end
-		FileUtils.mv(Dir.glob("#{DEPLOY_TEMP_DIR}*"), ".")
-		#FileUtils.rm_rf(DEPLOY_TEMP_DIR)
+		FileUtils.cp_r(Dir.glob("#{DEPLOY_TEMP_DIR}*"), ".")
+		FileUtils.rm_rf(DEPLOY_TEMP_DIR)
 	end
 
 end
 
-task :default => ["release:pull", "release:build", "release:move"]
+#task :default => ["release:pull", "release:build", "release:move"]
