@@ -19,5 +19,5 @@ def prepare_configuration
 end
 
 def restart_proxy
-  run "sudo god restart proxy-staging"
+  run "sudo god restart proxy"
 end
