@@ -20,19 +20,19 @@ namespace :release do
     Dir.glob('*').each do |f|
       if File.directory? f and File.exist? "#{f}/.git" then
         Dir.chdir f do
-				`git pull origin #{branch}`
+					`git pull origin #{branch}`
 				end
       end
     end
     Dir.glob('plugins/*').each do |f|
       if File.directory? f and File.exist? "#{f}/.git" then
         Dir.chdir f do
-				`git pull origin #{branch}`
+					`git pull origin #{branch}`
 				end
       end
     end
   end
-  
+
   desc "Build proxy, plugins and all of their dependencies, bundle into proxy.jar"
   task :build do
 		#create deploy directory structure
@@ -43,7 +43,7 @@ namespace :release do
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}htdocs" unless File.exists?("#{DEPLOY_TEMP_DIR}htdocs")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}plugins" unless File.exists?("#{DEPLOY_TEMP_DIR}plugins")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}plugins/libs" unless File.exists?("#{DEPLOY_TEMP_DIR}plugins/libs")
-  
+
     #build and bundle jkey-extractor, copy libs
     Dir.chdir(JKEY_DIR) do
       sh "rake"
@@ -69,17 +69,17 @@ namespace :release do
 				sh "rake RAILS_ENV='#{ENV['stage']}'"
 			end
 
-			FileUtils.cp_r("#{plugin_dir}/#{plugin_name}.jar", "#{DEPLOY_TEMP_DIR}plugins/libs")
+			FileUtils.cp("#{plugin_dir}/#{plugin_name}.jar", "#{DEPLOY_TEMP_DIR}plugins/libs")
 
 			FileUtils.cp_r(Dir.glob("#{plugin_dir}/offline/build/*"), "#{DEPLOY_TEMP_DIR}offline")
 			FileUtils.cp_r(Dir.glob("#{plugin_dir}/offline/scripts/*"), "#{DEPLOY_TEMP_DIR}offline/scripts")
-			
+
       #copy libs
       FileUtils.cp_r(Dir.glob("#{plugin_dir}/external_libs/*"), "#{DEPLOY_TEMP_DIR}libs")
-      
+
       #copy static contentplugin_dir
       FileUtils.cp_r(Dir.glob("#{plugin_dir}/static/*"), "#{DEPLOY_TEMP_DIR}htdocs")
-      
+
       #copy and update configuration xml files
 			contains = Dir.glob("#{plugin_dir}/plugins/*")
 			contains.each do |configFile|
@@ -91,11 +91,11 @@ namespace :release do
 					doc = REXML::Document.new file
 
 					doc.elements.each("plugin/libraries/lib") do |element|
-						element.text = "#{plugin_name}#{element.text}"
+						element.text = "plugins/#{element.text}"
 					end
 
 					doc.elements.each('plugin/classLocation') do |element|
-						element.text = "#{plugin_name}.jar"
+						element.text = "plugins/libs/#{plugin_name}.jar"
 					end
 
 					formatter = REXML::Formatters::Default.new
@@ -106,12 +106,22 @@ namespace :release do
 					FileUtils.cp_r(Dir.glob("#{configFile}"), "#{DEPLOY_TEMP_DIR}plugins")
 				end
 			end
-        
-      
+
+
     end
-    
+
   end
+
+	task :move do
+		Dir.glob("./*") do |dir|
+			if (dir != './deploy')
+				sh "rm -rf #{dir}"
+			end
+		end
+		FileUtils.mv(Dir.glob("#{DEPLOY_TEMP_DIR}*"), ".")
+		FileUtils.rm_rf(DEPLOY_TEMP_DIR)
+	end
 
 end
 
-task :default => ["release:pull", "release:build"]
+task :default => ["release:pull", "release:build", "release:move"]
