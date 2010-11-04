@@ -48,7 +48,7 @@ namespace :release do
     Dir.chdir(JKEY_DIR) do
       sh "rake"
     end
-    FileUtils.cp("#{JKEY_DIR}/jkeyextractor.jar", "#{PLUGINS_DIR}/#{CORE_PLUGINS_DIR}/external_libs")
+    FileUtils.cp_r("#{JKEY_DIR}/jkeyextractor.jar", "#{PLUGINS_DIR}/#{CORE_PLUGINS_DIR}/external_libs")
     FileUtils.cp_r(Dir.glob("#{JKEY_DIR}/lib/*"), "#{DEPLOY_TEMP_DIR}libs")
 
     #build and bundle proxy
