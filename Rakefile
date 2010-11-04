@@ -115,7 +115,7 @@ namespace :release do
 	task :move do
 		Dir.glob("./*") do |dir|
 			if (dir != './deploy')
-				sh "rm -rf #{dir}"
+				FileUtils.rm_rf(dir)
 			end
 		end
 		FileUtils.mv(Dir.glob("#{DEPLOY_TEMP_DIR}*"), ".")
@@ -124,4 +124,4 @@ namespace :release do
 
 end
 
-task :default => ["release:pull", "release:build"]
+task :default => ["release:pull", "release:build", "release:move"]
