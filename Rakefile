@@ -113,6 +113,8 @@ namespace :release do
   end
 
 	task :move do
+		puts ':::::::: MOVE EXITED ::::::::'
+		Process.exit
 		Dir.glob("./*") do |dir|
 			if (dir != './deploy')
 				FileUtils.rm_rf(dir)
