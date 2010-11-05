@@ -76,7 +76,7 @@ namespace :release do
 
 			FileUtils.cp("#{plugin_dir}/#{plugin_name}.jar", "#{DEPLOY_TEMP_DIR}plugins/libs")
 
-      FileUtils.cp_r(Dir.glob("#{plugin_dir}/def/bin/**/*.class"), "#{DEPLOY_TEMP_DIR}plugins/services")
+      FileUtils.cp_r(Dir.glob("#{plugin_dir}/def/bin/*"), "#{DEPLOY_TEMP_DIR}plugins/services")
 
 			FileUtils.cp_r(Dir.glob("#{plugin_dir}/offline/build/*"), "#{DEPLOY_TEMP_DIR}offline")
 			FileUtils.cp_r(Dir.glob("#{plugin_dir}/offline/scripts/*"), "#{DEPLOY_TEMP_DIR}offline/scripts")
