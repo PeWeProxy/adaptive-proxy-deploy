@@ -1,4 +1,4 @@
-set :deploy_to, "/home/peweproxy/release/production/"
+set :deploy_to, "/home/peweproxy/release"
 set :repository,  "gitosis@relax.fiit.stuba.sk:adaptive-proxy-maintenance.git"
 #stage-specific, moved to config/deploy/staging and config/deploy/production.rb
 #set :deploy_to, "/var/rails/#{application}"
