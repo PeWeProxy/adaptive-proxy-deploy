@@ -7,3 +7,6 @@
 [submodule "plugins/adaptive-proxy-coreplugins"]
 	path = plugins/adaptive-proxy-coreplugins
 	url = ssh://gitosis@peweproxy-staging.fiit.stuba.sk/adaptive-proxy-plugins.git
+[submodule "plugins/adaptive-proxy-bundle-messageboard"]
+	path = plugins/adaptive-proxy-bundle-messageboard
+	url = ssh://gitosis@peweproxy-staging.fiit.stuba.sk/adaptive-proxy-bundle-messageboard.git
