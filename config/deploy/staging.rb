@@ -1,5 +1,5 @@
 set :deploy_to, "/home/peweproxy/release"
-set :repository,  "gitosis@peweproxy-staging.fiit.stuba.sk:adaptive-proxy-root.git"
+set :repository,  "git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/adaptive-proxy-deploy.git"
 #stage-specific, moved to config/deploy/staging and config/deploy/production.rb
 #set :deploy_to, "/var/rails/#{application}"
 server "peweproxy-staging.fiit.stuba.sk", :app, :web, :db, :primary => true
