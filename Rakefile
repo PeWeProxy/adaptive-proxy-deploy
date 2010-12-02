@@ -68,7 +68,6 @@ namespace :release do
       #magic
       plugin_name = plugin_dir.match(/[^\/]+$/)[0]
 
-
       #rake
 			Dir.chdir(plugin_dir) do
 				sh "rake RAILS_ENV='#{ENV['stage']}'"
@@ -137,6 +136,10 @@ namespace :release do
 		FileUtils.cp_r(Dir.glob("#{DEPLOY_TEMP_DIR}*"), ".")
 		FileUtils.rm_rf(DEPLOY_TEMP_DIR)
 	end
+
+	task :erase_crontab do
+		sh "crontab -r"
+	end;
 
 end
 
