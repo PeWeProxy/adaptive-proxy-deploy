@@ -70,7 +70,7 @@ namespace :release do
 
       #rake
 			Dir.chdir(plugin_dir) do
-				sh "rake RAILS_ENV='#{ENV['stage']}'"
+				sh "rake RAILS_ENV='#{ENV['stage']}' DEPLOY_PATH='#{ENV['PROXY_ROOT']}'"
 			end
 
 			FileUtils.cp("#{plugin_dir}/#{plugin_name}.jar", "#{DEPLOY_TEMP_DIR}plugins/libs")
