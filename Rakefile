@@ -139,8 +139,12 @@ namespace :release do
 
 	task :erase_crontab do
 		sh "crontab -r"
-	end;
+	end
+	
+	task :print do
+	  puts "\n\nrunning default task\n\n"
+	end
 
 end
 
-#task :default => ["release:pull", "release:build", "release:move"]
+task :default => ["release:print"]
