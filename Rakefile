@@ -143,16 +143,12 @@ namespace :release do
 	end
 
 	task :erase_crontab do
-		sh "crontab -r"
+		sh "crontab -r &" # & - for ignoring crontab absence error
 	end
 	
 	task :print do
 	  puts "\n\nrunning default task\n\n"
 	end
-=======
-		sh "crontab -r &" # & - for ignoring crontab absence error
-	end;
->>>>>>> 3e76bb7aec06c406106adf9d3c679e4f04ee8858
 
 end
 
