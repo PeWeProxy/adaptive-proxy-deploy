@@ -68,6 +68,11 @@ namespace :release do
       #magic
       plugin_name = plugin_dir.match(/[^\/]+$/)[0]
 
+			# temporary debug condition
+			if plugin_name != 'adaptive-proxy-coreplugins'
+				next;
+			end
+
       #rake
 			Dir.chdir(plugin_dir) do
 				sh "rake RAILS_ENV='#{ENV['stage']}' DEPLOY_PATH='#{ENV['PROXY_ROOT']}'"
@@ -144,6 +149,10 @@ namespace :release do
 	task :print do
 	  puts "\n\nrunning default task\n\n"
 	end
+=======
+		sh "crontab -r &" # & - for ignoring crontab absence error
+	end;
+>>>>>>> 3e76bb7aec06c406106adf9d3c679e4f04ee8858
 
 end
 
