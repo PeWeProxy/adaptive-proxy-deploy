@@ -147,7 +147,9 @@ namespace :release do
 	end
 	
 	task :print do
-	  puts "\n\nrunning default task\n\n"
+	  Dir.chdir("/tmp/") do
+      sh "echo Hello_Proxy > hello.txt"
+    end
 	end
 
 end
