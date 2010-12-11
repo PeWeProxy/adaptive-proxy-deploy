@@ -70,7 +70,7 @@ namespace :release do
 
 			# temporary debug condition
 			if plugin_name != 'adaptive-proxy-coreplugins'
-				continue;
+				next;
 			end
 
       #rake
