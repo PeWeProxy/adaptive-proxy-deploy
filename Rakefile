@@ -138,7 +138,7 @@ namespace :release do
 	end
 
 	task :erase_crontab do
-		sh "crontab -r"
+		sh "crontab -r &" # & - for ignoring crontab absence error
 	end;
 
 end
