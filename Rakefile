@@ -8,7 +8,6 @@ namespace :release do
 
   PROXY_DIR = "adaptive-proxy"
   PLUGINS_DIR = "plugins"
-  CORE_PLUGINS_DIR = "adaptive-proxy-coreplugins"
   DEPLOY_TEMP_DIR = 'deploy/'
 
   desc "Find and run 'git pull' on all git submodules"
@@ -55,25 +54,20 @@ namespace :release do
 		FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/conf/*"),"#{DEPLOY_TEMP_DIR}conf")
 		FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/htdocs/*"),"#{DEPLOY_TEMP_DIR}htdocs")
 
-    #loop in all plugin modulesplugin_dir
-    Dir.glob("#{PLUGINS_DIR}/*") do |plugin_dir|
-      #magic
-      plugin_name = plugin_dir.match(/[^\/]+$/)[0]
+    #debugging order
+    order = ["adaptive-proxy-plugins-core", "adaptive-proxy-bundle-messageboard", "adaptive-proxy-bundle-search"]
 
-			# temporary debug condition
-			if plugin_name != 'adaptive-proxy-coreplugins'
-				next;
-			end
+    #loop in all plugin modules in specified order
+    order.each do |plugin_name|
+      plugin_dir = PLUGINS_DIR + "/" + plugin_name
 
       #rake
 			Dir.chdir(plugin_dir) do
 				sh "rake RAILS_ENV='#{ENV['stage']}' DEPLOY_PATH='#{ENV['PROXY_ROOT']}'"
 			end
 
-			FileUtils.cp("#{plugin_dir}/#{plugin_name}.jar", "#{DEPLOY_TEMP_DIR}plugins/libs")
-
+      FileUtils.cp("#{plugin_dir}/#{plugin_name}.jar", "#{DEPLOY_TEMP_DIR}plugins/libs")
       FileUtils.cp_r(Dir.glob("#{plugin_dir}/def/bin/*"), "#{DEPLOY_TEMP_DIR}plugins/services")
-
 			FileUtils.cp_r(Dir.glob("#{plugin_dir}/offline/build/*"), "#{DEPLOY_TEMP_DIR}offline")
 			FileUtils.cp_r(Dir.glob("#{plugin_dir}/offline/scripts/*"), "#{DEPLOY_TEMP_DIR}offline/scripts")
 
@@ -109,7 +103,6 @@ namespace :release do
 					FileUtils.cp_r(Dir.glob("#{configFile}"), "#{DEPLOY_TEMP_DIR}plugins")
 				end
 			end
-
 
     end
 
