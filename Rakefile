@@ -105,6 +105,10 @@ namespace :release do
 							lib_element = REXML::Element.new "lib"
 							lib_element.text = 'lib/'+dependency
 							libraries_element = doc.elements['plugin/libraries']
+							if libraries_element == nil
+								libraries_element = REXML::Element.new "libraries"
+								doc.root.add_element libraries_element
+							end
 							libraries_element.add_element lib_element
 						end
 					end
