@@ -100,7 +100,7 @@ namespace :release do
 						element.text = "../libs/#{element.text}"
 					end
 
-					File.read('Bundlefile').split.each do |dependency|
+					File.read(plugin_dir+'/Bundlefile').split.each do |dependency|
 						element = doc.add_element 'plugin/libraries/lib'
 						element.text = 'libs/'+dependency
 					end
