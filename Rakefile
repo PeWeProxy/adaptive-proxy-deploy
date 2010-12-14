@@ -100,9 +100,11 @@ namespace :release do
 						element.text = "../libs/#{element.text}"
 					end
 
-					File.read(plugin_dir+'/Bundlefile').split.each do |dependency|
-						element = doc.add_element 'plugin/libraries/lib'
-						element.text = 'libs/'+dependency
+					if File.exists?(plugin_dir+'/Bundlefile')
+						File.read(plugin_dir+'/Bundlefile').split.each do |dependency|
+							element = doc.add_element 'plugin/libraries/lib'
+							element.text = 'libs/'+dependency
+						end
 					end
 
 					doc.elements.each('plugin/classLocation') do |element|
@@ -118,12 +120,12 @@ namespace :release do
 				end
 			end
 
-    end
+		end
 
-  end
+	end
 
 	task :after do
-    Dir.glob("#{PLUGINS_DIR}/*") do |plugin_dir|
+		Dir.glob("#{PLUGINS_DIR}/*") do |plugin_dir|
 			Dir.chdir(plugin_dir) do
 				`rake after:after_deploy PROXY_ROOT='#{ENV['PROXY_ROOT']}'`
 			end
@@ -146,9 +148,9 @@ namespace :release do
 	end
 	
 	task :print do
-	  Dir.chdir("/tmp/") do
-      sh "echo Hello_Proxy > hello.txt"
-    end
+		Dir.chdir("/tmp/") do
+			sh "echo Hello_Proxy > hello.txt"
+		end
 	end
 
 end
