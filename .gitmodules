@@ -12,4 +12,4 @@
 	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/adaptive-proxy-bundle-messageboard.git
 [submodule "plugins/adaptive-proxy-bundle-search"]
 	path = plugins/adaptive-proxy-bundle-search
-	url = git@gitbus.fiit.stuba.sk:pewe-proxy-team-project/adaptive-proxy-bundle-search.git
+	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/adaptive-proxy-bundle-search.git
