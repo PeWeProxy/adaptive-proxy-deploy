@@ -10,6 +10,7 @@ namespace :release do
   PROXY_DIR = "adaptive-proxy"
   PLUGINS_DIR = "plugins"
   DEPLOY_TEMP_DIR = 'deploy/'
+	CORE_PLUGINS_DIR = "adaptive-proxy-coreplugins"
 
   desc "Find and run 'git pull' on all git submodules"
   task :pull do
