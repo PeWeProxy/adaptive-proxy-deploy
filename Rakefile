@@ -6,6 +6,7 @@ require 'rexml/document'
 
 namespace :release do
 
+	JKEY_DIR =  "jkey-extractor"
   PROXY_DIR = "adaptive-proxy"
   PLUGINS_DIR = "plugins"
   DEPLOY_TEMP_DIR = 'deploy/'
@@ -44,6 +45,13 @@ namespace :release do
     FileUtils.mkdir "#{DEPLOY_TEMP_DIR}plugins/services" unless File.exists?("#{DEPLOY_TEMP_DIR}plugins/services")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}conf" unless File.exists?("#{DEPLOY_TEMP_DIR}conf")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}logs" unless File.exists?("#{DEPLOY_TEMP_DIR}logs")
+
+		#build and bundle jkey-extractor, copy libs
+		Dir.chdir(JKEY_DIR) do
+			sh "rake"
+		end
+		FileUtils.cp("#{JKEY_DIR}/jkeyextractor.jar", "#{PLUGINS_DIR}/#{CORE_PLUGINS_DIR}/external_libs")
+		FileUtils.cp_r(Dir.glob("#{JKEY_DIR}/lib/*"), "#{DEPLOY_TEMP_DIR}libs")
 
     #build and bundle proxy
     Dir.chdir(PROXY_DIR) do
