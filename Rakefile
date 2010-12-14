@@ -102,7 +102,7 @@ namespace :release do
 
 					if File.exists?(plugin_dir+'/Bundlefile')
 						File.read(plugin_dir+'/Bundlefile').split.each do |dependency|
-							lib_element = Element.new "lib"
+							lib_element = REXML::Element.new "lib"
 							lib_element.text = 'lib/'+dependency
 							libraries_element = doc.elements['plugin/libraries']
 							libraries_element.add_element lib_element
