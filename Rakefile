@@ -100,6 +100,11 @@ namespace :release do
 						element.text = "../libs/#{element.text}"
 					end
 
+					File.read('Bundlefile').split.each do |dependency|
+						element = doc.add_element 'plugin/libraries/lib'
+						element.text = 'libs/'+dependency
+					end
+
 					doc.elements.each('plugin/classLocation') do |element|
 						element.text = "libs/#{plugin_name}.jar"
 					end
