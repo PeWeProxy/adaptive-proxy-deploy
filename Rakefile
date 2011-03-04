@@ -130,6 +130,40 @@ namespace :release do
 
 	end
 
+  task :variables do
+
+    string = <<EOF
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE variables SYSTEM "VariablesConfiguration.dtd">
+        <variables>
+        </variables>
+EOF
+    deploy_variables_doc = REXML::Document.new string
+
+    #TODO: needs refactoring
+    order = ["adaptive-proxy-coreplugins", "adaptive-proxy-bundle-messageboard", "adaptive-proxy-bundle-search"]
+
+     order.each do |plugin_name|
+      plugin_dir = PLUGINS_DIR + "/" + plugin_name
+
+      if File.exists? "#{plugin_dir}/plugins/variables.xml"
+        file = File.new(plugin_dir + "/plugins/variables.xml")
+        plugin_variables_doc = REXML::Document.new file
+      else
+        next
+      end
+
+      plugin_variables_doc.elements.each("/variables/variable") {|element|
+        deploy_variables_doc.root.elements.add(element)
+      }
+     end
+
+    formatter = REXML::Formatters::Pretty.new
+		File.open("#{DEPLOY_TEMP_DIR}plugins/variables.xml", 'w') do |write_file|
+			formatter.write(deploy_variables_doc, write_file)
+		end
+  end
+
 	task :after do
 		Dir.glob("#{PLUGINS_DIR}/*") do |plugin_dir|
 			Dir.chdir(plugin_dir) do
