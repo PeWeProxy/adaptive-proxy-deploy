@@ -152,13 +152,5 @@ namespace :release do
 	task :erase_crontab do
 		sh "crontab -r &" # & - for ignoring crontab absence error
 	end
-	
-	task :print do
-		Dir.chdir("/tmp/") do
-			sh "echo Hello_Proxy > hello.txt"
-		end
-	end
 
 end
-
-task :default => ["release:print"]
