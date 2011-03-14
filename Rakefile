@@ -158,7 +158,7 @@ EOF
       }
      end
 
-    formatter = REXML::Formatters::Pretty.new
+    formatter = REXML::Formatters::Default.new
 		File.open("#{DEPLOY_TEMP_DIR}plugins/variables.xml", 'w') do |write_file|
 			formatter.write(deploy_variables_doc, write_file)
 		end
