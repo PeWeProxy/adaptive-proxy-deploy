@@ -41,6 +41,7 @@ namespace :release do
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}offline/scripts" unless File.exists?("#{DEPLOY_TEMP_DIR}offline/scripts")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}libs" unless File.exists?("#{DEPLOY_TEMP_DIR}libs")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}htdocs" unless File.exists?("#{DEPLOY_TEMP_DIR}htdocs")
+		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}htdocs/public" unless File.exists?("#{DEPLOY_TEMP_DIR}htdocs/public")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}plugins" unless File.exists?("#{DEPLOY_TEMP_DIR}plugins")
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}plugins/libs" unless File.exists?("#{DEPLOY_TEMP_DIR}plugins/libs")
     FileUtils.mkdir "#{DEPLOY_TEMP_DIR}plugins/services" unless File.exists?("#{DEPLOY_TEMP_DIR}plugins/services")
@@ -84,7 +85,7 @@ namespace :release do
       FileUtils.cp_r(Dir.glob("#{plugin_dir}/external_libs/*"), "#{DEPLOY_TEMP_DIR}libs")
 
       #copy static contentplugin_dir
-      FileUtils.cp_r(Dir.glob("#{plugin_dir}/static/*"), "#{DEPLOY_TEMP_DIR}htdocs")
+      FileUtils.cp_r(Dir.glob("#{plugin_dir}/static/*"), "#{DEPLOY_TEMP_DIR}htdocs/public")
 
       #copy and update configuration xml files
 			contains = Dir.glob("#{plugin_dir}/plugins/*")
