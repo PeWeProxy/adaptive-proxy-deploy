@@ -65,7 +65,7 @@ namespace :release do
 		FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/htdocs/*"),"#{DEPLOY_TEMP_DIR}htdocs")
 
     #debugging order
-    order = ["adaptive-proxy-coreplugins", "adaptive-proxy-bundle-messageboard", "adaptive-proxy-bundle-search"]
+    order = ["adaptive-proxy-coreplugins", "adaptive-proxy-bundle-messageboard", "adaptive-proxy-bundle-search", "adaptive-proxy-bundle-search-goals"]
 
     #loop in all plugin modules in specified order
     order.each do |plugin_name|
