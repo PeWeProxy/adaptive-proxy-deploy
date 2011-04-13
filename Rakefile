@@ -49,11 +49,11 @@ namespace :release do
 		FileUtils.mkdir "#{DEPLOY_TEMP_DIR}logs" unless File.exists?("#{DEPLOY_TEMP_DIR}logs")
 
 		#build and bundle jkey-extractor, copy libs
-		Dir.chdir(JKEY_DIR) do
-			sh "rake"
-		end
-		FileUtils.cp("#{JKEY_DIR}/jkeyextractor.jar", "#{PLUGINS_DIR}/#{CORE_PLUGINS_DIR}/external_libs")
-		FileUtils.cp_r(Dir.glob("#{JKEY_DIR}/lib/*"), "#{DEPLOY_TEMP_DIR}libs")
+		#Dir.chdir(JKEY_DIR) do
+		#	sh "rake"
+		#end
+		#FileUtils.cp("#{JKEY_DIR}/jkeyextractor.jar", "#{PLUGINS_DIR}/#{CORE_PLUGINS_DIR}/external_libs")
+		#FileUtils.cp_r(Dir.glob("#{JKEY_DIR}/lib/*"), "#{DEPLOY_TEMP_DIR}libs")
 
     #build and bundle proxy
     Dir.chdir(PROXY_DIR) do
