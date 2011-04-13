@@ -16,3 +16,9 @@
 [submodule "plugins/adaptive-proxy-bundle-search-goals"]
 	path = plugins/adaptive-proxy-bundle-search-goals
 	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/adaptive-proxy-bundle-search-goals.git
+[submodule "plugins/adaptive-proxy-bundle-broken-pages-reporter"]
+	path = plugins/adaptive-proxy-bundle-broken-pages-reporter
+	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/adaptive-proxy-bundle-broken-pages-reporter.git
+[submodule "plugins/adaptive-proxy-bundle-keywords"]
+	path = plugins/adaptive-proxy-bundle-keywords
+	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/adaptive-proxy-bundle-keywords.git
