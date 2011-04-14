@@ -142,7 +142,7 @@ EOF
     deploy_variables_doc = REXML::Document.new string
 
     #TODO: needs refactoring
-    order = ["adaptive-proxy-coreplugins", "adaptive-proxy-bundle-messageboard", "adaptive-proxy-bundle-search"]
+    order = ["adaptive-proxy-coreplugins", "adaptive-proxy-bundle-messageboard", "adaptive-proxy-bundle-search", "adaptive-proxy-bundle-broken-pages-reporter", "adaptive-proxy-bundle-keywords"]
 
      order.each do |plugin_name|
       plugin_dir = PLUGINS_DIR + "/" + plugin_name
