@@ -9,16 +9,16 @@
 	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/adaptive-proxy-plugins-core.git
 [submodule "plugins/adaptive-proxy-bundle-messageboard"]
 	path = plugins/adaptive-proxy-bundle-messageboard
-	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/adaptive-proxy-bundle-messageboard.git
+	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/bundle-messageboard.git
 [submodule "plugins/adaptive-proxy-bundle-search"]
 	path = plugins/adaptive-proxy-bundle-search
-	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/adaptive-proxy-bundle-search.git
+	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/bundle-search.git
 [submodule "plugins/adaptive-proxy-bundle-search-goals"]
 	path = plugins/adaptive-proxy-bundle-search-goals
-	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/adaptive-proxy-bundle-search-goals.git
+	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/bundle-search-goals.git
 [submodule "plugins/adaptive-proxy-bundle-broken-pages-reporter"]
 	path = plugins/adaptive-proxy-bundle-broken-pages-reporter
-	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/adaptive-proxy-bundle-broken-pages-reporter.git
+	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/bundle-broken-pages-reporter.git
 [submodule "plugins/adaptive-proxy-bundle-keywords"]
 	path = plugins/adaptive-proxy-bundle-keywords
-	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/adaptive-proxy-bundle-keywords.git
+	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/bundle-keywords.git
