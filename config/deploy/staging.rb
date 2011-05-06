@@ -12,10 +12,7 @@ def run_migrations
 end
 
 def prepare_configuration
-  run "mv #{current_path}/conf/rabbit.conf.staging #{current_path}/conf/rabbit.conf"
-  run "mv #{current_path}/conf/log4j.xml.staging #{current_path}/conf/log4j.xml"
-  run "mv #{current_path}/proxy.jar  #{current_path}/proxy-staging.jar"
-  run "mv #{current_path}/plugins/MySQLDatabaseConnectionProviderService.xml.staging  #{current_path}/plugins/MySQLDatabaseConnectionProviderService.xml"
+  run "for file in **/*.staging; do; mv -f $file `dirname $file`/`basename $file .staging`; done"
 end
 
 def restart_proxy

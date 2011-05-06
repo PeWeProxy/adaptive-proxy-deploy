@@ -29,6 +29,7 @@ task :proxy_build do
 	 stream "cd #{current_path} && rake --rakefile=#{current_path}/Rakefile release:variables"
 	 stream "cd #{current_path} && rake --rakefile=#{current_path}/Rakefile release:after PROXY_ROOT=#{current_path}/deploy"
 	 stream "cd #{current_path} && rake --rakefile=#{current_path}/Rakefile release:move"
+   prepare_configuration
    restart_proxy
 end
 
