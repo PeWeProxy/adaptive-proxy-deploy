@@ -125,6 +125,10 @@ namespace :release do
 
   task :variables do
 
+    Dir["**/*.#{ENV['stage']}"].each do |file|
+      FileUtils.mv file, file.gsub(".#{ENV['stage']}", '')
+    end
+
     string = <<EOF
         <?xml version="1.0" encoding="UTF-8"?>
         <!DOCTYPE variables SYSTEM "VariablesConfiguration.dtd">
