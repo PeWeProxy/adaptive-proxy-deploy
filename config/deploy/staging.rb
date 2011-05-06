@@ -11,10 +11,6 @@ def run_migrations
 #  run "cd #{current_path}/schema/ && rake migrate RAILS_ENV='staging'"
 end
 
-def prepare_configuration
-  run "for file in **/*.staging; do; mv -f $file `dirname $file`/`basename $file .staging`; done"
-end
-
 def restart_proxy
   run "sudo god restart proxy"
 end

@@ -11,10 +11,6 @@ def run_migrations
   run "cd #{current_path}/schema/ && rake migrate RAILS_ENV='production'"
 end
 
-def prepare_configuration
-  run "for file in **/*.production; do; mv -f $file `dirname $file`/`basename $file .production`; done"
-end
-
 def restart_proxy
   run "god restart proxy"
 end

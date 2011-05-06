@@ -1,4 +1,6 @@
 require 'capistrano/ext/multistage'
+require 'fileutils'
+
 set :application, "peweproxy-release"
 set :scm, :git
 set :keep_releases, 2
@@ -31,6 +33,12 @@ task :proxy_build do
 	 stream "cd #{current_path} && rake --rakefile=#{current_path}/Rakefile release:move"
    prepare_configuration
    restart_proxy
+end
+
+def prepare_configuration
+  Dir["**/*.#{stage}"].each do |file|
+    FileUtils.mv file, file.gsub(".#{stage}", '')
+  end
 end
 
 after 'deploy', 'proxy_build', 'deploy:cleanup'
