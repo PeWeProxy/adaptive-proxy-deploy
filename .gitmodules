@@ -6,16 +6,19 @@
 	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/adaptive-proxy-plugins-core.git
 [submodule "plugins/bundle-messageboard"]
 	path = plugins/bundle-messageboard
-	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/bundle-messageboard.git
+	url = git@gitbus.fiit.stuba.sk:pewe-proxy-team-project/bundle-messageboard.git
 [submodule "plugins/bundle-search"]
 	path = plugins/bundle-search
-	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/bundle-search.git
-[submodule "plugins/bundle-search-goals"]
-	path = plugins/bundle-search-goals
-	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/bundle-search-goals.git
+	url = git@gitbus.fiit.stuba.sk:pewe-proxy-team-project/bundle-search.git
+[submodule "plugins/bundle-realtime-social-navigation"]
+	path = plugins/bundle-realtime-social-navigation
+	url = git@gitbus.fiit.stuba.sk:pewe-proxy-team-project/bundle-realtime-social-navigation.git
 [submodule "plugins/bundle-broken-pages-reporter"]
 	path = plugins/bundle-broken-pages-reporter
-	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/bundle-broken-pages-reporter.git
+	url = git@gitbus.fiit.stuba.sk:pewe-proxy-team-project/bundle-broken-pages-reporter.git
 [submodule "plugins/bundle-keywords"]
 	path = plugins/bundle-keywords
-	url = git://gitbus.fiit.stuba.sk/pewe-proxy-team-project/bundle-keywords.git
+	url = git@gitbus.fiit.stuba.sk:pewe-proxy-team-project/bundle-keywords.git
+[submodule "plugins/bundle-search-goals"]
+	path = plugins/bundle-search-goals
+	url = git@gitbus.fiit.stuba.sk:pewe-proxy-team-project/bundle-search-goals.git
