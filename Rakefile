@@ -57,7 +57,7 @@ namespace :release do
 		FileUtils.cp_r(Dir.glob("#{PROXY_DIR}/htdocs/*"),"#{DEPLOY_TEMP_DIR}htdocs")
 
     #debugging order
-    order = ["adaptive-proxy-coreplugins", "adaptive-proxy-bundle-messageboard", "adaptive-proxy-bundle-search", "adaptive-proxy-bundle-search-goals", "adaptive-proxy-bundle-broken-pages-reporter", "adaptive-proxy-bundle-keywords"]
+    order = ["adaptive-proxy-coreplugins", "bundle-messageboard", "bundle-search", "bundle-search-goals", "bundle-broken-pages-reporter", "bundle-keywords"]
 
     #loop in all plugin modules in specified order
     order.each do |plugin_name|
@@ -138,7 +138,7 @@ EOF
     deploy_variables_doc = REXML::Document.new string
 
     #TODO: needs refactoring
-    order = ["adaptive-proxy-coreplugins", "adaptive-proxy-bundle-messageboard", "adaptive-proxy-bundle-search",  "adaptive-proxy-bundle-search-goals", "adaptive-proxy-bundle-broken-pages-reporter", "adaptive-proxy-bundle-keywords"]
+    order = ["adaptive-proxy-coreplugins", "bundle-messageboard", "bundle-search",  "bundle-search-goals", "bundle-broken-pages-reporter", "bundle-keywords"]
 
      order.each do |plugin_name|
       plugin_dir = PLUGINS_DIR + "/" + plugin_name
